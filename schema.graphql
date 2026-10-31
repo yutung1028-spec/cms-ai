@@ -88,6 +88,49 @@ input OccupantCreateInput {
   lnglat: JSON
 }
 
+type Amenity {
+  id: ID!
+  name: String
+  nickname: String
+  lnglat: JSON
+}
+
+input AmenityWhereUniqueInput {
+  id: ID
+}
+
+input AmenityWhereInput {
+  AND: [AmenityWhereInput!]
+  OR: [AmenityWhereInput!]
+  NOT: [AmenityWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  nickname: StringFilter
+}
+
+input AmenityOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  nickname: OrderDirection
+}
+
+input AmenityUpdateInput {
+  name: String
+  nickname: String
+  lnglat: JSON
+}
+
+input AmenityUpdateArgs {
+  where: AmenityWhereUniqueInput!
+  data: AmenityUpdateInput!
+}
+
+input AmenityCreateInput {
+  name: String
+  nickname: String
+  lnglat: JSON
+}
+
 type User {
   id: ID!
   name: String
@@ -330,6 +373,12 @@ type Mutation {
   updateOccupants(data: [OccupantUpdateArgs!]!): [Occupant]
   deleteOccupant(where: OccupantWhereUniqueInput!): Occupant
   deleteOccupants(where: [OccupantWhereUniqueInput!]!): [Occupant]
+  createAmenity(data: AmenityCreateInput!): Amenity
+  createAmenities(data: [AmenityCreateInput!]!): [Amenity]
+  updateAmenity(where: AmenityWhereUniqueInput!, data: AmenityUpdateInput!): Amenity
+  updateAmenities(data: [AmenityUpdateArgs!]!): [Amenity]
+  deleteAmenity(where: AmenityWhereUniqueInput!): Amenity
+  deleteAmenities(where: [AmenityWhereUniqueInput!]!): [Amenity]
   createUser(data: UserCreateInput!): User
   createUsers(data: [UserCreateInput!]!): [User]
   updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
@@ -367,6 +416,9 @@ type Query {
   occupant(where: OccupantWhereUniqueInput!): Occupant
   occupants(where: OccupantWhereInput! = {}, orderBy: [OccupantOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OccupantWhereUniqueInput): [Occupant!]
   occupantsCount(where: OccupantWhereInput! = {}): Int
+  amenity(where: AmenityWhereUniqueInput!): Amenity
+  amenities(where: AmenityWhereInput! = {}, orderBy: [AmenityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AmenityWhereUniqueInput): [Amenity!]
+  amenitiesCount(where: AmenityWhereInput! = {}): Int
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   usersCount(where: UserWhereInput! = {}): Int

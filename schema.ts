@@ -31,6 +31,19 @@ export const lists = {
     },
   }),
 
+  Amenity: list({
+    // WARNING
+    //   this starter currently uses allowAll on every list
+    //   anyone can create, query, update and delete Amenities
+    access: allowAll,
+    fields: {
+      name: text({ validation: { isRequired: true } }),
+      nickname: text(),
+      // Stored as JSON, e.g. { "lng": 114.1694, "lat": 22.3193 }
+      lnglat: json(),
+    },
+  }),
+
   User: list({
     // WARNING
     //   for this starter project, anyone can create, query, update and delete anything

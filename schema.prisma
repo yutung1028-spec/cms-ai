@@ -17,6 +17,13 @@ model Occupant {
   lnglat   Json?
 }
 
+model Amenity {
+  id       String @id @default(cuid())
+  name     String @default("")
+  nickname String @default("")
+  lnglat   Json?
+}
+
 model User {
   id        String    @id @default(cuid())
   name      String    @default("")
