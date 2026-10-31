@@ -10,6 +10,13 @@ generator client {
   output   = "./generated/prisma"
 }
 
+model Occupant {
+  id       String @id @default(cuid())
+  name     String @default("")
+  nickname String @default("")
+  lnglat   Json?
+}
+
 model User {
   id        String    @id @default(cuid())
   name      String    @default("")
