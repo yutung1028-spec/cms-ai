@@ -14,9 +14,15 @@ import { lists } from './schema.ts'
 // authentication is configured separately here too, but you might move this elsewhere
 // when you write your list-level access control functions, as they typically rely on session data
 import { withAuth, session } from './auth.ts'
+import { registerPoisApi } from './pois.ts'
 
 export default withAuth(
   config({
+    server: {
+      extendExpressApp(app, context) {
+        registerPoisApi(app, context)
+      },
+    },
     db: {
       // we're using sqlite for the fastest startup experience
       //   for more information on what database might be appropriate for you
