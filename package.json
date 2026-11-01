@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "keystone dev",
     "start": "keystone start",
-    "build": "keystone build"
+    "build": "keystone build",
+    "test": "node --experimental-strip-types --test tests/**/*.test.ts"
   },
   "dependencies": {
     "@keystone-6/auth": "^10.0.2",

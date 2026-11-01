@@ -399,6 +399,21 @@ type Mutation {
   deleteTags(where: [TagWhereUniqueInput!]!): [Tag]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
+  importPois(payload: String!): PoiImportResult!
+}
+
+type PoiImportResult {
+  ok: Boolean!
+  error: String
+  createdOccupantCount: Int!
+  createdAmenityCount: Int!
+  items: [PoiImportCreatedItem!]!
+}
+
+type PoiImportCreatedItem {
+  index: Int!
+  type: String!
+  id: ID!
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure

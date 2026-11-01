@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "pois": [
+    {
+      "type": "occupant",
+      "name": "Example Shop",
+      "nickname": "Shop A",
+      "lnglat": {
+        "lng": 114.1694,
+        "lat": 22.3193
+      }
+    },
+    {
+      "type": "amenity",
+      "name": "Accessible Toilet",
+      "nickname": "",
+      "lnglat": {
+        "lng": 114.1698,
+        "lat": 22.3197
+      }
+    }
+  ]
+}

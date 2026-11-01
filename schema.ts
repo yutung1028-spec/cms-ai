@@ -6,6 +6,7 @@
 // - https://keystonejs.com/docs/config/lists
 
 import { list } from '@keystone-6/core'
+import { poiAccessibilityFields } from './poi-accessibility.ts'
 import { allowAll } from '@keystone-6/core/access'
 
 // see https://keystonejs.com/docs/fields/overview for the full list of fields
@@ -23,11 +24,17 @@ import type { Lists } from './generated/keystone/types'
 export const lists = {
   Occupant: list({
     access: allowAll,
+    ui: {
+      listView: {
+        initialColumns: ['name', 'disabledFacilitiesStatus', 'accessibilityStatus'],
+      },
+    },
     fields: {
       name: text({ validation: { isRequired: true } }),
       nickname: text(),
       // Stored as JSON, e.g. { "lng": 114.1694, "lat": 22.3193 }
       lnglat: json(),
+      ...poiAccessibilityFields(),
     },
   }),
 
@@ -36,11 +43,17 @@ export const lists = {
     //   this starter currently uses allowAll on every list
     //   anyone can create, query, update and delete Amenities
     access: allowAll,
+    ui: {
+      listView: {
+        initialColumns: ['name', 'disabledFacilitiesStatus', 'accessibilityStatus'],
+      },
+    },
     fields: {
       name: text({ validation: { isRequired: true } }),
       nickname: text(),
       // Stored as JSON, e.g. { "lng": 114.1694, "lat": 22.3193 }
       lnglat: json(),
+      ...poiAccessibilityFields(),
     },
   }),
 

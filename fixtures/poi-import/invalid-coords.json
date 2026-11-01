@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "pois": [
+    {
+      "type": "amenity",
+      "name": "Bad Coords",
+      "lnglat": {
+        "lng": 200,
+        "lat": 22
+      }
+    }
+  ]
+}

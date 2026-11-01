@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "pois": [
+    {
+      "type": "occupant",
+      "name": "Wrong Version"
+    }
+  ]
+}

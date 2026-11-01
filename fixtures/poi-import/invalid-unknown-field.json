@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "pois": [
+    {
+      "type": "occupant",
+      "name": "Has Id",
+      "id": "should-be-rejected"
+    }
+  ]
+}

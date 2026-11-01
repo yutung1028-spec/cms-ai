@@ -7,6 +7,7 @@ import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
 //   you can find out more at https://keystonejs.com/docs/apis/config
 
 import { config } from '@keystone-6/core'
+import { extendPoiImportSchema } from './poi-import/graphql.ts'
 import { Buffer } from 'node:buffer';
 // to keep this file tidy, we define our schema in a different file
 import { lists } from './schema.ts'
@@ -48,22 +49,25 @@ export default withAuth(
         })().catch(error => console.error('Failed to create initial user:', error))
       },
     },
-    apolloConfig: {
-      plugins: [
-        {
-          async requestDidStart(requestContext) {
-            console.log(
-              'graphql operation',
-              requestContext.request.operationName ?? '(unnamed operation)'
-            )
-            return {
-              async didEncounterErrors(requestContext) {
-                console.error(...requestContext.errors)
-              },
-            }
+    graphql: {
+      extendGraphqlSchema: extendPoiImportSchema,
+      apolloConfig: {
+        plugins: [
+          {
+            async requestDidStart(requestContext) {
+              console.log(
+                'graphql operation',
+                requestContext.request.operationName ?? '(unnamed operation)'
+              )
+              return {
+                async didEncounterErrors(requestContext) {
+                  console.error(...requestContext.errors)
+                },
+              }
+            },
           },
-        },
-      ],
+        ],
+      },
     },
     lists,
     session,

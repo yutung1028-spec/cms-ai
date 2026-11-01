@@ -25,6 +25,7 @@ export function CustomNavigation({ lists }: NavigationProps) {
         <NavGroup title="POIs">
           {occupant && <NavItem href={getHrefFromList(occupant)}>{occupant.label}</NavItem>}
           {amenity && <NavItem href={getHrefFromList(amenity)}>{amenity.label}</NavItem>}
+          <NavItem href="/poi-import">POI Import</NavItem>
         </NavGroup>
         {otherLists.map(list => (
           <NavItem key={list.key} href={getHrefFromList(list)}>
