@@ -3,7 +3,7 @@ import {
   DISABLED_FACILITIES_STATUS_SET,
   type AccessibilityStatus,
   type DisabledFacilitiesStatus,
-} from '../poi-accessibility.ts'
+} from '../poi-accessibility-values.ts'
 
 export const MAX_POI_IMPORT_BYTES = 1024 * 1024
 export const MAX_POI_IMPORT_ITEMS = 500
@@ -124,8 +124,39 @@ function previewFromRaw(index: number, raw: unknown, errors: string[]): PoiImpor
     name: typeof record.name === 'string' ? record.name : '',
     nickname: typeof record.nickname === 'string' ? record.nickname : '',
     lnglat: Number.isFinite(lng) && Number.isFinite(lat) ? { lng, lat } : null,
+    disabledFacilitiesStatus:
+      typeof record.disabledFacilitiesStatus === 'string' ? record.disabledFacilitiesStatus : '',
+    accessibilityStatus: typeof record.accessibilityStatus === 'string' ? record.accessibilityStatus : '',
+    accessibilityNotes: typeof record.accessibilityNotes === 'string' ? record.accessibilityNotes : '',
+    accessibilityCheckedAt:
+      typeof record.accessibilityCheckedAt === 'string' ? record.accessibilityCheckedAt : '',
     errors,
   }
+}
+
+function validateEnumStatus(
+  field: string,
+  value: unknown,
+  allowed: Set<string>
+): { ok: true; value: string } | { ok: false; errors: string[] } {
+  if (value === undefined) return { ok: true, value: 'unknown' }
+  if (typeof value !== 'string' || value === '') {
+    return { ok: false, errors: [`${field} must be one of: ${[...allowed].join(', ')}`] }
+  }
+  if (!allowed.has(value)) {
+    return { ok: false, errors: [`${field} must be one of: ${[...allowed].join(', ')}`] }
+  }
+  return { ok: true, value }
+}
+
+export function parseIso8601WithTimezone(value: unknown): { ok: true; value: string } | { ok: false; error: string } {
+  if (typeof value !== 'string' || value === '') {
+    return { ok: false, error: 'accessibilityCheckedAt must be an ISO 8601 datetime with a timezone' }
+  }
+  if (!ISO_8601_WITH_TIMEZONE.test(value) || !Number.isFinite(Date.parse(value))) {
+    return { ok: false, error: 'accessibilityCheckedAt must be an ISO 8601 datetime with a timezone' }
+  }
+  return { ok: true, value }
 }
 
 function validateLnglat(value: unknown): { ok: true; value: ValidLnglat } | { ok: false; errors: string[] } {
@@ -166,6 +197,10 @@ function validateItem(index: number, raw: unknown): { preview: PoiImportItemPrev
         name: '',
         nickname: '',
         lnglat: null,
+        disabledFacilitiesStatus: '',
+        accessibilityStatus: '',
+        accessibilityNotes: '',
+        accessibilityCheckedAt: '',
         errors: ['Item must be a non-null object'],
       },
     }
@@ -196,15 +231,42 @@ function validateItem(index: number, raw: unknown): { preview: PoiImportItemPrev
     else lnglat = result.value
   }
 
+  const facilities = validateEnumStatus(
+    'disabledFacilitiesStatus',
+    record.disabledFacilitiesStatus,
+    DISABLED_FACILITIES_STATUS_SET
+  )
+  if (!facilities.ok) errors.push(...facilities.errors)
+
+  const access = validateEnumStatus('accessibilityStatus', record.accessibilityStatus, ACCESSIBILITY_STATUS_SET)
+  if (!access.ok) errors.push(...access.errors)
+
+  if (record.accessibilityNotes !== undefined && typeof record.accessibilityNotes !== 'string') {
+    errors.push('accessibilityNotes must be a string when provided')
+  }
+
+  let accessibilityCheckedAt: string | undefined
+  if (record.accessibilityCheckedAt !== undefined) {
+    const checked = parseIso8601WithTimezone(record.accessibilityCheckedAt)
+    if (!checked.ok) errors.push(checked.error)
+    else accessibilityCheckedAt = checked.value
+  }
+
   const preview = previewFromRaw(index, raw, errors)
   if (errors.length) return { preview }
 
   const value: ValidPoi = {
     type,
     name: (record.name as string).trim(),
+    disabledFacilitiesStatus: facilities.ok
+      ? (facilities.value as DisabledFacilitiesStatus)
+      : 'unknown',
+    accessibilityStatus: access.ok ? (access.value as AccessibilityStatus) : 'unknown',
   }
   if (typeof record.nickname === 'string') value.nickname = record.nickname
   if (lnglat) value.lnglat = lnglat
+  if (typeof record.accessibilityNotes === 'string') value.accessibilityNotes = record.accessibilityNotes
+  if (accessibilityCheckedAt) value.accessibilityCheckedAt = accessibilityCheckedAt
   return { preview, value }
 }
 
@@ -294,7 +356,11 @@ export function mapPoiCreateData(poi: ValidPoi): MappedPoiCreate {
   const data: MappedPoiCreate = {
     name: poi.name,
     nickname: poi.nickname ?? '',
+    disabledFacilitiesStatus: poi.disabledFacilitiesStatus,
+    accessibilityStatus: poi.accessibilityStatus,
+    accessibilityNotes: poi.accessibilityNotes ?? '',
   }
   if (poi.lnglat) data.lnglat = { lng: poi.lnglat.lng, lat: poi.lnglat.lat }
+  if (poi.accessibilityCheckedAt) data.accessibilityCheckedAt = poi.accessibilityCheckedAt
   return data
 }

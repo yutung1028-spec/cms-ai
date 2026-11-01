@@ -28,7 +28,27 @@ test('valid mixed occupant and amenity payload', () => {
     name: 'Example Shop',
     nickname: 'Shop A',
     lnglat: { lng: 114.1694, lat: 22.3193 },
+    disabledFacilitiesStatus: 'unknown',
+    accessibilityStatus: 'unknown',
+    accessibilityNotes: '',
   })
+})
+
+test('new accessibility fields import and invalid enums or timestamps are rejected', () => {
+  const valid = parsePoiImportJson(readFixture('valid-accessibility.json'))
+  assert.equal(valid.ok, true)
+  assert.deepEqual(mapPoiCreateData(valid.items[0].value), {
+    name: 'Step-free Shop',
+    nickname: 'Shop B',
+    lnglat: { lng: 114.17, lat: 22.32 },
+    disabledFacilitiesStatus: 'available',
+    accessibilityStatus: 'partially_accessible',
+    accessibilityNotes: 'Side door is step-free; staff assistance needed.',
+    accessibilityCheckedAt: '2026-11-01T05:00:00+08:00',
+  })
+  assert.equal(parsePoiImportJson(readFixture('invalid-status-enum.json')).ok, false)
+  assert.equal(parsePoiImportJson(readFixture('invalid-status-empty.json')).ok, false)
+  assert.equal(parsePoiImportJson(readFixture('invalid-checked-at.json')).ok, false)
 })
 
 test('rejects unknown type, missing name, bad coords, unknown fields, version, empty pois', () => {
@@ -52,8 +72,17 @@ test('does not spread unknown fields into create data', () => {
     name: 'Only Mapped',
     nickname: 'N',
     lnglat: { lng: 1, lat: 2 },
+    disabledFacilitiesStatus: 'unknown',
+    accessibilityStatus: 'unknown',
   })
-  assert.deepEqual(Object.keys(mapped).sort(), ['lnglat', 'name', 'nickname'])
+  assert.deepEqual(Object.keys(mapped).sort(), [
+    'accessibilityNotes',
+    'accessibilityStatus',
+    'disabledFacilitiesStatus',
+    'lnglat',
+    'name',
+    'nickname',
+  ])
 })
 
 test('anonymous and non-allowlisted sessions cannot import', () => {

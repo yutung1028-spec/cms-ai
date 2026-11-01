@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "pois": [
+    {
+      "type": "occupant",
+      "name": "Bad Status",
+      "disabledFacilitiesStatus": "yes",
+      "accessibilityStatus": "accessible"
+    }
+  ]
+}

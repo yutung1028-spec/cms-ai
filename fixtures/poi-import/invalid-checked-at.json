@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "pois": [
+    {
+      "type": "occupant",
+      "name": "Bad Timestamp",
+      "accessibilityCheckedAt": "2026-11-01T05:00:00"
+    }
+  ]
+}

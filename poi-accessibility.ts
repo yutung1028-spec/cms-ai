@@ -1,20 +1,6 @@
 import { group } from '@keystone-6/core'
 import { select, text, timestamp } from '@keystone-6/core/fields'
 
-export const DISABLED_FACILITIES_STATUS_VALUES = ['unknown', 'available', 'unavailable'] as const
-export type DisabledFacilitiesStatus = (typeof DISABLED_FACILITIES_STATUS_VALUES)[number]
-
-export const ACCESSIBILITY_STATUS_VALUES = [
-  'unknown',
-  'accessible',
-  'partially_accessible',
-  'not_accessible',
-] as const
-export type AccessibilityStatus = (typeof ACCESSIBILITY_STATUS_VALUES)[number]
-
-export const DISABLED_FACILITIES_STATUS_SET = new Set<string>(DISABLED_FACILITIES_STATUS_VALUES)
-export const ACCESSIBILITY_STATUS_SET = new Set<string>(ACCESSIBILITY_STATUS_VALUES)
-
 const ACCESSIBILITY_GROUP_DESCRIPTION =
   '輪椅／行動不便人士的人工紀錄：是否有設施、以及是否可到達或進入。兩項獨立，互不推斷。這不是對所有殘疾類別的判定，也不是法規符合性或認證。未核實請保持「未核實」。若可達性為有條件或部分可達、或不可達，建議填寫無障礙備註。'
 

@@ -11,17 +11,25 @@ generator client {
 }
 
 model Occupant {
-  id       String @id @default(cuid())
-  name     String @default("")
-  nickname String @default("")
-  lnglat   Json?
+  id                       String    @id @default(cuid())
+  name                     String    @default("")
+  nickname                 String    @default("")
+  lnglat                   Json?
+  disabledFacilitiesStatus String    @default("unknown")
+  accessibilityStatus      String    @default("unknown")
+  accessibilityNotes       String    @default("")
+  accessibilityCheckedAt   DateTime?
 }
 
 model Amenity {
-  id       String @id @default(cuid())
-  name     String @default("")
-  nickname String @default("")
-  lnglat   Json?
+  id                       String    @id @default(cuid())
+  name                     String    @default("")
+  nickname                 String    @default("")
+  lnglat                   Json?
+  disabledFacilitiesStatus String    @default("unknown")
+  accessibilityStatus      String    @default("unknown")
+  accessibilityNotes       String    @default("")
+  accessibilityCheckedAt   DateTime?
 }
 
 model User {

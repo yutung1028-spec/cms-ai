@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "pois": [
+    {
+      "type": "amenity",
+      "name": "Empty Status",
+      "disabledFacilitiesStatus": "",
+      "accessibilityStatus": null
+    }
+  ]
+}
