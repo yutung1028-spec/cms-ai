@@ -169,7 +169,11 @@ export default function PoiFromTextConfirmPage() {
   return (
     <PageContainer header={<Heading type="h3">確認草稿</Heading>} title="確認草稿">
       <VStack gap="large" paddingY="large">
-        <Text>尚未儲存。以下欄位來自第一階段非 AI 示範解析，不是模型結果。</Text>
+        <Text>
+          {draft.parser === 'dsh-extract'
+            ? '尚未儲存。以下內容由 AI 根據你提供的文字產生，可能有錯漏，請核對後再確認建立。'
+            : '尚未儲存。以下欄位來自第一階段非 AI 示範解析，不是模型結果。'}
+        </Text>
         <Text>記錄類型：{draft.type === 'occupant' ? 'Occupant' : 'Amenity'}</Text>
         <Text>來源原文（唯讀）</Text>
         <textarea value={draft.source} rows={6} readOnly />

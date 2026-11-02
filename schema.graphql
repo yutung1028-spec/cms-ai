@@ -505,7 +505,29 @@ type Mutation {
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   importPois(payload: String!): PoiImportResult!
   askAccessibilityAssistant(question: String!): AskAccessibilityAssistantResult!
+  generatePoiFromTextDraft(source: String!, type: String!): GeneratePoiFromTextResult!
   createPoiFromTextDraft(type: String!, name: String!, nickname: String, address: String, lng: Float, lat: Float, disabledFacilitiesStatus: String, accessibilityStatus: String, accessibilityNotes: String, accessibilityCheckedAt: String): CreatePoiFromTextResult!
+}
+
+type GeneratePoiFromTextResult {
+  ok: Boolean!
+  error: String
+  code: String
+  source: String
+  type: String
+  fields: GeneratePoiFromTextFields
+}
+
+type GeneratePoiFromTextFields {
+  name: String!
+  nickname: String!
+  address: String!
+  lng: Float
+  lat: Float
+  disabledFacilitiesStatus: String!
+  accessibilityStatus: String!
+  accessibilityNotes: String!
+  accessibilityCheckedAt: String!
 }
 
 type CreatePoiFromTextResult {

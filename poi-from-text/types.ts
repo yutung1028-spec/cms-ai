@@ -25,7 +25,7 @@ export type PoiFromTextDraft = {
   type: PoiType
   fields: PoiFromTextFields
   unmapped: UnmappedLabel[]
-  parser: 'phase-one-demo'
+  parser: 'phase-one-demo' | 'dsh-extract'
 }
 
 export function emptyPoiFromTextFields(): PoiFromTextFields {

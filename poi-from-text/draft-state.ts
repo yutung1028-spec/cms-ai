@@ -17,7 +17,7 @@ function isPoiType(value: unknown): value is PoiType {
 
 export function parseStoredDraft(raw: unknown): PoiFromTextDraft | null {
   if (!isRecord(raw)) return null
-  if (raw.parser !== 'phase-one-demo') return null
+  if (raw.parser !== 'phase-one-demo' && raw.parser !== 'dsh-extract') return null
   if (typeof raw.source !== 'string' || !isPoiType(raw.type)) return null
   if (!isRecord(raw.fields)) return null
   const fields = raw.fields
@@ -57,7 +57,7 @@ export function parseStoredDraft(raw: unknown): PoiFromTextDraft | null {
   return {
     source: raw.source,
     type: raw.type,
-    parser: 'phase-one-demo',
+    parser: raw.parser,
     unmapped,
     fields: {
       name: fields.name,
