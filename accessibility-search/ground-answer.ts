@@ -9,6 +9,7 @@ export type SourceCard = {
   id: string
   name: string
   nickname: string
+  address: string
   lnglat: unknown
   disabledFacilitiesStatus: string
   accessibilityStatus: string
@@ -71,6 +72,7 @@ export function toSourceCard(item: ApprovedPoiRecord): SourceCard {
     id: item.id,
     name: item.name,
     nickname: item.nickname,
+    address: item.address,
     lnglat: item.lnglat,
     disabledFacilitiesStatus: item.disabledFacilitiesStatus,
     accessibilityStatus: item.accessibilityStatus,

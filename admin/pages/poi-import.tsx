@@ -116,6 +116,7 @@ export default function PoiImportPage() {
                   <th>Type</th>
                   <th>Name</th>
                   <th>Nickname</th>
+                  <th>Address</th>
                   <th>Lnglat</th>
                   <th>Facilities</th>
                   <th>Access</th>
@@ -131,6 +132,7 @@ export default function PoiImportPage() {
                     <td>{row.type}</td>
                     <td>{row.name}</td>
                     <td>{row.nickname}</td>
+                    <td>{row.address}</td>
                     <td>{formatLnglat(row.lnglat)}</td>
                     <td>{row.disabledFacilitiesStatus}</td>
                     <td>{row.accessibilityStatus}</td>

@@ -10,6 +10,7 @@ import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
 import { config } from '@keystone-6/core'
 import { extendPoiImportSchema } from './poi-import/graphql.ts'
 import { extendAccessibilitySearchSchema } from './accessibility-search/graphql.ts'
+import { extendPoiFromTextSchema } from './poi-from-text/graphql.ts'
 import { Buffer } from 'node:buffer';
 // to keep this file tidy, we define our schema in a different file
 import { lists } from './schema.ts'
@@ -53,7 +54,7 @@ export default withAuth(
     },
     graphql: {
       extendGraphqlSchema: schema =>
-        extendAccessibilitySearchSchema(extendPoiImportSchema(schema)),
+        extendPoiFromTextSchema(extendAccessibilitySearchSchema(extendPoiImportSchema(schema))),
       apolloConfig: {
         plugins: [
           {

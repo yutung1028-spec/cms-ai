@@ -19,7 +19,7 @@ export function registerPoisApi(app: ExpressLike, commonContext: KeystoneContext
     try {
       const context = await commonContext.withRequest(req, res)
       const occupants = await context.query.Occupant.findMany({
-        query: 'id name nickname lnglat',
+        query: 'id name nickname address lnglat',
       })
 
       sendJson(res, 200, {
@@ -28,6 +28,7 @@ export function registerPoisApi(app: ExpressLike, commonContext: KeystoneContext
           occupant: {
             name: occupant.name,
             nickname: occupant.nickname,
+            address: occupant.address,
             coordinates: occupant.lnglat ?? null,
           },
         })),

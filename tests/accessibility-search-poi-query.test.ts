@@ -28,6 +28,11 @@ function applyWhere(rows: Row[], where: Record<string, unknown> = {}): Row[] {
       contains(row.nickname, String((where.nickname as { contains: string }).contains))
     )
   }
+  if (where.address && typeof where.address === 'object' && 'contains' in (where.address as object)) {
+    return rows.filter(row =>
+      contains(row.address, String((where.address as { contains: string }).contains))
+    )
+  }
   if (where.accessibilityStatus && typeof where.accessibilityStatus === 'object') {
     return rows.filter(
       row => row.accessibilityStatus === (where.accessibilityStatus as { equals: string }).equals

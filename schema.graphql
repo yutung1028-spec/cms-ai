@@ -5,6 +5,7 @@ type Occupant {
   id: ID!
   name: String
   nickname: String
+  address: String
   lnglat: JSON
   disabledFacilitiesStatus: OccupantDisabledFacilitiesStatusType
   accessibilityStatus: OccupantAccessibilityStatusType
@@ -38,6 +39,7 @@ input OccupantWhereInput {
   id: IDFilter
   name: StringFilter
   nickname: StringFilter
+  address: StringFilter
   disabledFacilitiesStatus: OccupantDisabledFacilitiesStatusTypeNullableFilter
   accessibilityStatus: OccupantAccessibilityStatusTypeNullableFilter
   accessibilityNotes: StringFilter
@@ -112,6 +114,7 @@ input OccupantOrderByInput {
   id: OrderDirection
   name: OrderDirection
   nickname: OrderDirection
+  address: OrderDirection
   disabledFacilitiesStatus: OrderDirection
   accessibilityStatus: OrderDirection
   accessibilityNotes: OrderDirection
@@ -126,6 +129,7 @@ enum OrderDirection {
 input OccupantUpdateInput {
   name: String
   nickname: String
+  address: String
   lnglat: JSON
   disabledFacilitiesStatus: OccupantDisabledFacilitiesStatusType
   accessibilityStatus: OccupantAccessibilityStatusType
@@ -141,6 +145,7 @@ input OccupantUpdateArgs {
 input OccupantCreateInput {
   name: String
   nickname: String
+  address: String
   lnglat: JSON
   disabledFacilitiesStatus: OccupantDisabledFacilitiesStatusType
   accessibilityStatus: OccupantAccessibilityStatusType
@@ -152,6 +157,7 @@ type Amenity {
   id: ID!
   name: String
   nickname: String
+  address: String
   lnglat: JSON
   disabledFacilitiesStatus: AmenityDisabledFacilitiesStatusType
   accessibilityStatus: AmenityAccessibilityStatusType
@@ -183,6 +189,7 @@ input AmenityWhereInput {
   id: IDFilter
   name: StringFilter
   nickname: StringFilter
+  address: StringFilter
   disabledFacilitiesStatus: AmenityDisabledFacilitiesStatusTypeNullableFilter
   accessibilityStatus: AmenityAccessibilityStatusTypeNullableFilter
   accessibilityNotes: StringFilter
@@ -207,6 +214,7 @@ input AmenityOrderByInput {
   id: OrderDirection
   name: OrderDirection
   nickname: OrderDirection
+  address: OrderDirection
   disabledFacilitiesStatus: OrderDirection
   accessibilityStatus: OrderDirection
   accessibilityNotes: OrderDirection
@@ -216,6 +224,7 @@ input AmenityOrderByInput {
 input AmenityUpdateInput {
   name: String
   nickname: String
+  address: String
   lnglat: JSON
   disabledFacilitiesStatus: AmenityDisabledFacilitiesStatusType
   accessibilityStatus: AmenityAccessibilityStatusType
@@ -231,6 +240,7 @@ input AmenityUpdateArgs {
 input AmenityCreateInput {
   name: String
   nickname: String
+  address: String
   lnglat: JSON
   disabledFacilitiesStatus: AmenityDisabledFacilitiesStatusType
   accessibilityStatus: AmenityAccessibilityStatusType
@@ -495,6 +505,15 @@ type Mutation {
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   importPois(payload: String!): PoiImportResult!
   askAccessibilityAssistant(question: String!): AskAccessibilityAssistantResult!
+  createPoiFromTextDraft(type: String!, name: String!, nickname: String, address: String, lng: Float, lat: Float, disabledFacilitiesStatus: String, accessibilityStatus: String, accessibilityNotes: String, accessibilityCheckedAt: String): CreatePoiFromTextResult!
+}
+
+type CreatePoiFromTextResult {
+  ok: Boolean!
+  error: String
+  type: String
+  id: ID
+  adminPath: String
 }
 
 type AskAccessibilityAssistantResult {
@@ -512,6 +531,7 @@ type AccessibilityPoi {
   id: ID!
   name: String!
   nickname: String!
+  address: String!
   lnglat: JSON
   disabledFacilitiesStatus: String!
   accessibilityStatus: String!

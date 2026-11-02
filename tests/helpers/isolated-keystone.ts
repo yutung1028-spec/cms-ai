@@ -8,6 +8,7 @@ import type { KeystoneConfig } from '@keystone-6/core/types'
 import * as PrismaModule from '../../generated/prisma/client.ts'
 import { extendPoiImportSchema } from '../../poi-import/graphql.ts'
 import { extendAccessibilitySearchSchema } from '../../accessibility-search/graphql.ts'
+import { extendPoiFromTextSchema } from '../../poi-from-text/graphql.ts'
 import { lists } from '../../schema.ts'
 
 const SCHEMA_SQL = `
@@ -15,6 +16,7 @@ CREATE TABLE IF NOT EXISTS "Occupant" (
   "id" TEXT NOT NULL PRIMARY KEY,
   "name" TEXT NOT NULL DEFAULT '',
   "nickname" TEXT NOT NULL DEFAULT '',
+  "address" TEXT NOT NULL DEFAULT '',
   "lnglat" TEXT,
   "disabledFacilitiesStatus" TEXT NOT NULL DEFAULT 'unknown',
   "accessibilityStatus" TEXT NOT NULL DEFAULT 'unknown',
@@ -25,6 +27,7 @@ CREATE TABLE IF NOT EXISTS "Amenity" (
   "id" TEXT NOT NULL PRIMARY KEY,
   "name" TEXT NOT NULL DEFAULT '',
   "nickname" TEXT NOT NULL DEFAULT '',
+  "address" TEXT NOT NULL DEFAULT '',
   "lnglat" TEXT,
   "disabledFacilitiesStatus" TEXT NOT NULL DEFAULT 'unknown',
   "accessibilityStatus" TEXT NOT NULL DEFAULT 'unknown',
@@ -81,7 +84,8 @@ export function createTestConfig(filename: string, listOverrides?: KeystoneConfi
       }),
     },
     graphql: {
-      extendGraphqlSchema: schema => extendAccessibilitySearchSchema(extendPoiImportSchema(schema)),
+      extendGraphqlSchema: schema =>
+        extendPoiFromTextSchema(extendAccessibilitySearchSchema(extendPoiImportSchema(schema))),
     },
     lists: listOverrides ?? lists,
   })
@@ -133,6 +137,7 @@ export const SEARCH_QUERY = `
         id
         name
         nickname
+        address
         disabledFacilitiesStatus
         accessibilityStatus
         accessibilityNotes

@@ -14,6 +14,7 @@ model Occupant {
   id                       String    @id @default(cuid())
   name                     String    @default("")
   nickname                 String    @default("")
+  address                  String    @default("")
   lnglat                   Json?
   disabledFacilitiesStatus String    @default("unknown")
   accessibilityStatus      String    @default("unknown")
@@ -25,6 +26,7 @@ model Amenity {
   id                       String    @id @default(cuid())
   name                     String    @default("")
   nickname                 String    @default("")
+  address                  String    @default("")
   lnglat                   Json?
   disabledFacilitiesStatus String    @default("unknown")
   accessibilityStatus      String    @default("unknown")

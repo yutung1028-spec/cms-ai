@@ -14,6 +14,7 @@ export type ApprovedPoiRecord = {
   id: string
   name: string
   nickname: string
+  address: string
   lnglat: unknown
   disabledFacilitiesStatus: string
   accessibilityStatus: string
@@ -82,6 +83,7 @@ function mapApprovedPoi(type: PoiListType, raw: Record<string, unknown>): Approv
     id: asString(raw.id),
     name: asString(raw.name),
     nickname: asString(raw.nickname),
+    address: asString(raw.address),
     lnglat: raw.lnglat ?? null,
     disabledFacilitiesStatus: asString(raw.disabledFacilitiesStatus, 'unknown'),
     accessibilityStatus: asString(raw.accessibilityStatus, 'unknown'),
@@ -103,7 +105,11 @@ function buildWhere(args: SearchPoisArgs): Record<string, unknown> {
   const and: Record<string, unknown>[] = []
   if (args.query) {
     and.push({
-      OR: [{ name: { contains: args.query } }, { nickname: { contains: args.query } }],
+      OR: [
+        { name: { contains: args.query } },
+        { nickname: { contains: args.query } },
+        { address: { contains: args.query } },
+      ],
     })
   }
   if (args.notesKeyword) {

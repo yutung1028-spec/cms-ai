@@ -36,6 +36,7 @@ const AccessibilityPoiType = g.object<ApprovedPoiRecord>()({
     id: g.field({ type: g.nonNull(g.ID) }),
     name: g.field({ type: g.nonNull(g.String) }),
     nickname: g.field({ type: g.nonNull(g.String) }),
+    address: g.field({ type: g.nonNull(g.String) }),
     lnglat: g.field({ type: g.JSON }),
     disabledFacilitiesStatus: g.field({ type: g.nonNull(g.String) }),
     accessibilityStatus: g.field({ type: g.nonNull(g.String) }),

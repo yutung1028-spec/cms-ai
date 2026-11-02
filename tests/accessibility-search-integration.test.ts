@@ -202,6 +202,7 @@ test('isolated list ACL still filters Occupant without changing production schem
       fields: {
         name: text({ validation: { isRequired: true } }),
         nickname: text(),
+        address: text(),
         lnglat: json(),
         ...poiAccessibilityFields(),
       },

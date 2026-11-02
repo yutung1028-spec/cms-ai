@@ -53,6 +53,7 @@ const SEARCH_POIS = gql`
         id
         name
         nickname
+        address
         disabledFacilitiesStatus
         accessibilityStatus
         accessibilityNotes
@@ -86,6 +87,7 @@ const ASK_ASSISTANT = gql`
         id
         name
         nickname
+        address
         disabledFacilitiesStatus
         accessibilityStatus
         accessibilityNotes
@@ -106,6 +108,7 @@ const GET_POI = gql`
         id
         name
         nickname
+        address
         disabledFacilitiesStatus
         accessibilityStatus
         accessibilityNotes
@@ -121,6 +124,7 @@ type PoiCard = {
   id: string
   name: string
   nickname: string
+  address: string
   disabledFacilitiesStatus: string
   accessibilityStatus: string
   accessibilityNotes: string
@@ -349,6 +353,7 @@ export default function AccessibilitySearchPage() {
                   <Text>來源 {item.type} {item.id}</Text>
                   <Text>name：{item.name}</Text>
                   <Text>nickname：{item.nickname || '（無）'}</Text>
+                  <Text>地址：{item.address || '（無）'}</Text>
                   <Text>設施狀態：{item.disabledFacilitiesStatus}</Text>
                   <Text>可達性：{item.accessibilityStatus}</Text>
                   <Text>原始備註：{item.accessibilityNotes || '（無）'}</Text>
@@ -463,6 +468,7 @@ export default function AccessibilitySearchPage() {
                   <Text>type：{item.type}</Text>
                   <Text>name：{item.name}</Text>
                   <Text>nickname：{item.nickname || '（無）'}</Text>
+                  <Text>地址：{item.address || '（無）'}</Text>
                   <Text>
                     設施狀態：{labelOf(FACILITY_LABELS, item.disabledFacilitiesStatus)} (
                     {item.disabledFacilitiesStatus})
@@ -494,6 +500,7 @@ export default function AccessibilitySearchPage() {
               <Text>type：{detail.type}</Text>
               <Text>name：{detail.name}</Text>
               <Text>nickname：{detail.nickname || '（無）'}</Text>
+              <Text>地址：{detail.address || '（無）'}</Text>
               <Text>設施狀態：{detail.disabledFacilitiesStatus}</Text>
               <Text>可達性：{detail.accessibilityStatus}</Text>
               <Text>原始備註：{detail.accessibilityNotes || '（無）'}</Text>

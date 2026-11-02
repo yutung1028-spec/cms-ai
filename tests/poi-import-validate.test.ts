@@ -27,6 +27,7 @@ test('valid mixed occupant and amenity payload', () => {
   assert.deepEqual(mapPoiCreateData(result.items[0].value), {
     name: 'Example Shop',
     nickname: 'Shop A',
+    address: '',
     lnglat: { lng: 114.1694, lat: 22.3193 },
     disabledFacilitiesStatus: 'unknown',
     accessibilityStatus: 'unknown',
@@ -40,6 +41,7 @@ test('new accessibility fields import and invalid enums or timestamps are reject
   assert.deepEqual(mapPoiCreateData(valid.items[0].value), {
     name: 'Step-free Shop',
     nickname: 'Shop B',
+    address: '',
     lnglat: { lng: 114.17, lat: 22.32 },
     disabledFacilitiesStatus: 'available',
     accessibilityStatus: 'partially_accessible',
@@ -78,6 +80,7 @@ test('does not spread unknown fields into create data', () => {
   assert.deepEqual(Object.keys(mapped).sort(), [
     'accessibilityNotes',
     'accessibilityStatus',
+    'address',
     'disabledFacilitiesStatus',
     'lnglat',
     'name',

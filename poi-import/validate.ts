@@ -13,6 +13,7 @@ const ITEM_KEYS = new Set([
   'type',
   'name',
   'nickname',
+  'address',
   'lnglat',
   'disabledFacilitiesStatus',
   'accessibilityStatus',
@@ -34,6 +35,7 @@ export type ValidPoi = {
   type: PoiType
   name: string
   nickname?: string
+  address?: string
   lnglat?: ValidLnglat
   disabledFacilitiesStatus: DisabledFacilitiesStatus
   accessibilityStatus: AccessibilityStatus
@@ -46,6 +48,7 @@ export type PoiImportItemPreview = {
   type: string
   name: string
   nickname: string
+  address: string
   lnglat: ValidLnglat | null
   disabledFacilitiesStatus: string
   accessibilityStatus: string
@@ -65,6 +68,7 @@ export type PoiImportSummary = {
 export type MappedPoiCreate = {
   name: string
   nickname: string
+  address: string
   lnglat?: ValidLnglat
   disabledFacilitiesStatus: DisabledFacilitiesStatus
   accessibilityStatus: AccessibilityStatus
@@ -123,6 +127,7 @@ function previewFromRaw(index: number, raw: unknown, errors: string[]): PoiImpor
     type: typeof record.type === 'string' ? record.type : '',
     name: typeof record.name === 'string' ? record.name : '',
     nickname: typeof record.nickname === 'string' ? record.nickname : '',
+    address: typeof record.address === 'string' ? record.address : '',
     lnglat: Number.isFinite(lng) && Number.isFinite(lat) ? { lng, lat } : null,
     disabledFacilitiesStatus:
       typeof record.disabledFacilitiesStatus === 'string' ? record.disabledFacilitiesStatus : '',
@@ -196,6 +201,7 @@ function validateItem(index: number, raw: unknown): { preview: PoiImportItemPrev
         type: '',
         name: '',
         nickname: '',
+        address: '',
         lnglat: null,
         disabledFacilitiesStatus: '',
         accessibilityStatus: '',
@@ -222,6 +228,9 @@ function validateItem(index: number, raw: unknown): { preview: PoiImportItemPrev
 
   if (record.nickname !== undefined && typeof record.nickname !== 'string') {
     errors.push('nickname must be a string when provided')
+  }
+  if (record.address !== undefined && typeof record.address !== 'string') {
+    errors.push('address must be a string when provided')
   }
 
   let lnglat: ValidLnglat | undefined
@@ -264,6 +273,7 @@ function validateItem(index: number, raw: unknown): { preview: PoiImportItemPrev
     accessibilityStatus: access.ok ? (access.value as AccessibilityStatus) : 'unknown',
   }
   if (typeof record.nickname === 'string') value.nickname = record.nickname
+  if (typeof record.address === 'string') value.address = record.address
   if (lnglat) value.lnglat = lnglat
   if (typeof record.accessibilityNotes === 'string') value.accessibilityNotes = record.accessibilityNotes
   if (accessibilityCheckedAt) value.accessibilityCheckedAt = accessibilityCheckedAt
@@ -356,6 +366,7 @@ export function mapPoiCreateData(poi: ValidPoi): MappedPoiCreate {
   const data: MappedPoiCreate = {
     name: poi.name,
     nickname: poi.nickname ?? '',
+    address: poi.address ?? '',
     disabledFacilitiesStatus: poi.disabledFacilitiesStatus,
     accessibilityStatus: poi.accessibilityStatus,
     accessibilityNotes: poi.accessibilityNotes ?? '',

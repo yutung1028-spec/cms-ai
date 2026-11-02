@@ -26,12 +26,15 @@ export const lists = {
     access: allowAll,
     ui: {
       listView: {
-        initialColumns: ['name', 'disabledFacilitiesStatus', 'accessibilityStatus'],
+        initialColumns: ['name', 'address', 'disabledFacilitiesStatus', 'accessibilityStatus'],
       },
     },
     fields: {
       name: text({ validation: { isRequired: true } }),
       nickname: text(),
+      address: text({
+        ui: { label: '地址' },
+      }),
       // Stored as JSON, e.g. { "lng": 114.1694, "lat": 22.3193 }
       lnglat: json(),
       ...poiAccessibilityFields(),
@@ -45,12 +48,15 @@ export const lists = {
     access: allowAll,
     ui: {
       listView: {
-        initialColumns: ['name', 'disabledFacilitiesStatus', 'accessibilityStatus'],
+        initialColumns: ['name', 'address', 'disabledFacilitiesStatus', 'accessibilityStatus'],
       },
     },
     fields: {
       name: text({ validation: { isRequired: true } }),
       nickname: text(),
+      address: text({
+        ui: { label: '地址' },
+      }),
       // Stored as JSON, e.g. { "lng": 114.1694, "lat": 22.3193 }
       lnglat: json(),
       ...poiAccessibilityFields(),
