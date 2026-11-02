@@ -494,6 +494,30 @@ type Mutation {
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   importPois(payload: String!): PoiImportResult!
+  askAccessibilityAssistant(question: String!): AskAccessibilityAssistantResult!
+}
+
+type AskAccessibilityAssistantResult {
+  ok: Boolean!
+  error: String
+  code: String
+  blocked: Boolean!
+  text: String
+  notices: [String!]!
+  sources: [AccessibilityPoi!]!
+}
+
+type AccessibilityPoi {
+  type: String!
+  id: ID!
+  name: String!
+  nickname: String!
+  lnglat: JSON
+  disabledFacilitiesStatus: String!
+  accessibilityStatus: String!
+  accessibilityNotes: String!
+  accessibilityCheckedAt: String
+  adminPath: String!
 }
 
 type PoiImportResult {
@@ -539,6 +563,43 @@ type Query {
   tagsCount(where: TagWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: User
+  searchAccessibilityPois(query: String, type: String, disabledFacilitiesStatus: String, accessibilityStatus: String, notesKeyword: String, checkedBefore: String, uncheckedOnly: Boolean, take: Int): SearchAccessibilityPoisResult!
+  getAccessibilityPoi(type: String!, id: ID!): GetAccessibilityPoiResult!
+  accessibilityAssistantStatus: AccessibilityAssistantStatus!
+}
+
+type SearchAccessibilityPoisResult {
+  ok: Boolean!
+  error: String
+  truncated: Boolean!
+  totalCount: Int!
+  returnedCount: Int!
+  items: [AccessibilityPoi!]!
+  appliedFilters: AccessibilitySearchFilters
+}
+
+type AccessibilitySearchFilters {
+  query: String
+  type: String!
+  disabledFacilitiesStatus: String
+  accessibilityStatus: String
+  notesKeyword: String
+  checkedBefore: String
+  uncheckedOnly: Boolean!
+  take: Int!
+  skip: Int!
+  resultOrder: String!
+}
+
+type GetAccessibilityPoiResult {
+  ok: Boolean!
+  error: String
+  item: AccessibilityPoi
+}
+
+type AccessibilityAssistantStatus {
+  configured: Boolean!
+  reason: String
 }
 
 type KeystoneMeta {

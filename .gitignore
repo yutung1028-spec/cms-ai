@@ -3,3 +3,7 @@ node_modules
 generated/
 keystone.db
 *.log
+tests/.tmp/
+.env
+.dsh-home/
+**/.credentials.yaml

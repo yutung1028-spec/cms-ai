@@ -6,19 +6,22 @@
     "dev": "keystone dev",
     "start": "keystone start",
     "build": "keystone build",
-    "test": "node --experimental-strip-types --test tests/**/*.test.ts"
+    "test": "node --experimental-strip-types --import ./tests/helpers/generated-prisma-loader.mjs --test tests/**/*.test.ts"
   },
   "dependencies": {
+    "@deepseek-ai/dsh": "0.2.1-rc.5",
+    "@deepseek-ai/dsh-sdk-client": "0.2.1-rc.5",
     "@keystone-6/auth": "^10.0.2",
     "@keystone-6/core": "^8.0.4",
     "@keystone-6/fields-document": "^11.0.2",
     "@prisma/adapter-better-sqlite3": "^7.9.0",
     "@prisma/client": "^7.9.0",
+    "better-sqlite3": "^12.6.0",
+    "dotenv": "^18.0.9",
     "next": "^16.2.10",
+    "prisma": "^7.9.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "prisma": "^7.9.0",
-    "typescript": "^6.0.0",
-    "better-sqlite3": "^12.6.0"
+    "typescript": "^6.0.0"
   }
 }
